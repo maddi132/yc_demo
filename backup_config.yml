@@ -9,3 +9,6 @@
       ios_config:
         backup: yes
       register: config_output
+
+    - debug:
+        var: config_output
