@@ -9,7 +9,7 @@
       ios_config:
         backup: yes
         backup_options:
-          dir_path: /etch/configs/backup/
+          dir_path: /etc/configs/backup/
       register: config_output
 
     - debug:
