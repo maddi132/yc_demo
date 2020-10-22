@@ -8,6 +8,7 @@
     - name: BACKUP THE CONFIG
       ios_config:
         backup: yes
+        backup_path: /etc/configs/backup/
       register: config_output
 
     - debug:
