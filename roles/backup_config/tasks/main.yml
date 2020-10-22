@@ -17,10 +17,10 @@
     regexp: 'Current configuration.*'
     state: absent
 
-- name: ARCHIVE CONFIG
-  ios_command:
-    commands: archive config
+#- name: ARCHIVE CONFIG
+#  ios_command:
+#    commands: archive config#
 
-- name: PRINT LIST OF ARCHITE CONFIGS
-  ios_command:
-    commands: show archive
+#- name: PRINT LIST OF ARCHITE CONFIGS
+#  ios_command:
+#    commands: show archive
