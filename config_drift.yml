@@ -5,11 +5,13 @@
   gather_facts: no
 
   tasks:
+
+    - name: set intended config
+      shell: cat /etc/configs/golden/{{inventory_hostname}}_golden.cfg
+      register: golden_config
+
     - name: check the running-config against master config
       ios_config:
         diff_against: intended
-        intended_config: "/etc/configs/golden/{{inventory_hostname}}_golden.cfg"
-      register: config_drift
-
-    - debug:
-        msg: "{{config_drift}}"
+        intended_config: "{{ golden_config.stdout }}"
+      register: diff_against
