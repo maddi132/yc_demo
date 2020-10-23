@@ -14,3 +14,15 @@
 
 #    - debug:
 #        msg: "{{config_drift}}"
+    - name: Send Email with Report
+      mail:
+        host: smtp.office365.com
+        port: 587
+        username: "{{ email_address }}"
+        password: "{{ email_account_password }}"
+        from: "{{ email_address }}"
+        to: "{{ email_address }}"
+        subject: "Configuration Drift Report"
+        body: "Consolidated configuration drift report {{ config_drift }}"
+      delegate_to: localhost
+      run_once: yes
