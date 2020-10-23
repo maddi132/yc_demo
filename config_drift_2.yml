@@ -32,6 +32,11 @@
       delegate_to: localhost
       run_once: yes
 
+    - name: Gather facts of localhost to get current time/date
+      setup:
+        gather_subset: 'min'
+      delegate_to: localhost
+      
 #Render the output
     - name: Render Template
       template:
@@ -52,6 +57,7 @@
         - '+!'
         - '+'
       delegate_to: localhost
+
     - name: Remove Special Characters from the report
       lineinfile:
         path: "reports/{{ inventory_hostname }}_config_drift_report.txt"
