@@ -12,4 +12,4 @@
       register: diff_against
 
     - debug:
-        msg: diff_against
+        msg: "{{diff_against}}"
