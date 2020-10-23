@@ -8,8 +8,9 @@
     - name: check the running-config against master config
       ios_config:
         diff_against: intended
-        intended_config: "/etc/configs/golden/{{inventory_hostname}}_golden.cfg"
-      register: config_drift
+#        intended_config: "/etc/configs/golden/{{inventory_hostname}}_golden.cfg"
+        intended_config: "{{ lookup('file', 'master.cfg') }}"
+#      register: config_drift
 
-    - debug:
-        msg: "{{config_drift}}"
+#    - debug:
+#        msg: "{{config_drift}}"
