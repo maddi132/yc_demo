@@ -15,3 +15,18 @@
         diff_against: intended
         intended_config: "{{ golden_config.stdout }}"
       register: diff_against
+      
+    - name: Send Email with Report
+      mail:
+        host: smtp.office365.com
+        port: 587
+        username: "{{ email_address }}"
+        password: "{{ email_account_password }}"
+        from: "{{ email_address }}"
+        to: "{{ email_address }}"
+        subject: "Configuration Drift Report"
+        body: "Consolidated configuration drift report {{diff_against}}"
+        attach:
+         - reports/Consolidated_Config_Drift_Report.txt
+      delegate_to: localhost
+      run_once: yes
