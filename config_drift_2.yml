@@ -36,7 +36,7 @@
       setup:
         gather_subset: 'min'
       delegate_to: localhost
-      
+
 #Render the output
     - name: Render Template
       template:
@@ -78,7 +78,8 @@
         port: 587
         username: "{{ email_address }}"
         password: "{{ email_account_password }}"
-        to: "{{to_email_address}}"
+        to: 
+          - Ashish Maddi <ashish.maddi@yottaconnect.com>
         subject: "Configuration Drift Report"
         body: "Consolidated configuration drift report"
         attach:
