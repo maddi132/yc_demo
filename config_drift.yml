@@ -15,6 +15,5 @@
         diff_against: intended
         intended_config: "{{ golden_config.stdout }}"
       register: diff_against
-
-    - debug:
-      msg: "{{ diff_against }}"
+      debug:
+        msg: "{{ diff_against }}"
