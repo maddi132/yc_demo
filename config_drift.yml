@@ -6,6 +6,6 @@
 
   tasks:
     - name: check the running-config against master config
-      cisco.ios.ios_config:
+      ios_config:
         diff_against: intended
         intended_config: "/etc/configs/golden/{{inventory_hostname}}_golden.cfg"
