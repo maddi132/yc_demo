@@ -9,3 +9,7 @@
       ios_config:
         diff_against: intended
         intended_config: "/etc/configs/golden/{{inventory_hostname}}_golden.cfg"
+      register: diff_against
+
+    - debug:
+        msg: diff_against
