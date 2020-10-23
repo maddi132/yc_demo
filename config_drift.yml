@@ -9,7 +9,7 @@
       ios_config:
         diff_against: intended
 #        intended_config: "/etc/configs/golden/{{inventory_hostname}}_golden.cfg"
-        intended_config: "{{ lookup('file', 'master.cfg') }}"
+        intended_config: "{{ lookup('file', '{{inventory_hostname}}_golden.cfg') }}"
 #      register: config_drift
 
 #    - debug:
