@@ -78,8 +78,8 @@
         port: 587
         username: "{{ email_address }}"
         password: "{{ email_account_password }}"
-        to: 
-          - Ashish Maddi <ashish.maddi@yottaconnect.com>
+        from: "{{ email_address }}"
+        to: "{{ email_address }}"
         subject: "Configuration Drift Report"
         body: "Consolidated configuration drift report"
         attach:
