@@ -1,0 +1,81 @@
+---
+- name: Cisco Backup Config
+  hosts: "{{ host_group }}"
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+
+    - name: set intended config
+      shell: cat /etc/configs/golden/{{inventory_hostname}}_golden.cfg
+      register: golden_config
+
+    - name: check the running-config against master config
+      ios_config:
+        diff_against: intended
+        intended_config: "{{ golden_config.stdout }}"
+      register: config_drift
+
+# Save the file to the reports folder
+    - name: Clean Up Reports Directory if it exists
+      file:
+        path: reports
+        state: absent
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Create Reports Directory
+      file:
+        path: reports
+        state: directory
+        mode: 0755
+      delegate_to: localhost
+      run_once: yes
+
+#Render the output
+    - name: Render Template
+      template:
+        src: roles/templates/config_drift_template.txt.j2
+        dest: "reports/{{ inventory_hostname }}_config_drift_report.txt"
+      delegate_to: localhost
+
+    - name: Remove Non Config Lines from the report
+      lineinfile:
+        path: "reports/{{ inventory_hostname }}_config_drift_report.txt"
+        state: absent
+        line: '{{ item }}'
+      loop:
+        - '+Building configuration...'
+        - '--- '
+        - '+++ '
+        - '-!         '
+        - '+!'
+        - '+'
+      delegate_to: localhost
+    - name: Remove Special Characters from the report
+      lineinfile:
+        path: "reports/{{ inventory_hostname }}_config_drift_report.txt"
+        state: absent
+        regexp: '^@@(.*)$'
+      delegate_to: localhost
+
+    - name: Consolidate Final Report
+      assemble:
+        src: reports/
+        dest: reports/Consolidated_Config_Drift_Report.txt
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Send Email with Report
+      mail:
+        host: smtp.office365.com
+        port: 587
+        username: "{{ email_address }}"
+        password: "{{ email_account_password }}"
+        to: "{{to_email_address}}"
+        subject: "Configuration Drift Report"
+        body: "Consolidated configuration drift report"
+        attach:
+         - reports/Consolidated_Config_Drift_Report.txt
+      delegate_to: localhost
+      run_once: yes
