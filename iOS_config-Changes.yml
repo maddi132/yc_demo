@@ -1,0 +1,10 @@
+---
+- name: Update Cisco IOS Configuration
+  hosts: "{{ host_group }}"
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+    - name: Configure IOS devices
+      ios_config:
+        commands: "{{ios_commans}}"
