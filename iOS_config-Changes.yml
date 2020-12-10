@@ -7,4 +7,4 @@
   tasks:
     - name: Configure IOS devices
       ios_config:
-        commands: "{{ios_commans}}"
+        commands: "{{ios_commands}}"
