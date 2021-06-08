@@ -5,7 +5,7 @@
   gather_facts: no
 
   tasks:
-    - name: ENSURE THAT THE DESIRED SNMP STRINGS ARE PRESENT
+    - name: UPDATE THE NTP SERVER
       ios_config:
         commands:
           - ntp server 10.1.1.1
